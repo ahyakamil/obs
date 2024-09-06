@@ -1,7 +1,7 @@
 package com.obs.app.obs_api.controller;
 
 import com.obs.app.obs_api.common.ResponseWrapper;
-import com.obs.app.obs_api.dto.Object;
+import com.obs.app.obs_api.dto.CreateItemDto;
 import com.obs.app.obs_api.dto.ItemDto;
 import com.obs.app.obs_api.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +18,8 @@ public class ItemController {
     ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<ResponseWrapper<Void>> create(@RequestBody Object object) {
-        itemService.create(object);
+    public ResponseEntity<ResponseWrapper<Void>> create(@RequestBody CreateItemDto createItemDto) {
+        itemService.create(createItemDto);
         return new ResponseWrapper<Void>().buildResponseCreated();
     }
 
@@ -36,7 +36,7 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseWrapper<Void>> updateById(@PathVariable("id") Long id, @RequestBody Object itemDto) {
+    public ResponseEntity<ResponseWrapper<Void>> updateById(@PathVariable("id") Long id, @RequestBody CreateItemDto itemDto) {
         itemService.updateById(id, itemDto);
         return new ResponseWrapper<Void>().buildResponseOk();
     }

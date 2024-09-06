@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Object {
+public class CreateItemDto {
     @NotBlank(message = ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK)
     private String name;
 

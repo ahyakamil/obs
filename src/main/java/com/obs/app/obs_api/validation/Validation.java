@@ -1,6 +1,6 @@
 package com.obs.app.obs_api.validation;
 
-import com.obs.app.obs_api.dto.Object;
+import com.obs.app.obs_api.dto.CreateItemDto;
 import com.obs.app.obs_api.exception.BadRequestException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;

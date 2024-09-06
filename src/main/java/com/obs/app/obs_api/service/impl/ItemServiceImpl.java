@@ -1,7 +1,7 @@
 package com.obs.app.obs_api.service.impl;
 
 import com.obs.app.obs_api.domain.Item;
-import com.obs.app.obs_api.dto.Object;
+import com.obs.app.obs_api.dto.CreateItemDto;
 import com.obs.app.obs_api.dto.ItemDto;
 import com.obs.app.obs_api.exception.ConflictException;
 import com.obs.app.obs_api.exception.NotFoundException;
@@ -29,7 +29,7 @@ public class ItemServiceImpl implements ItemService {
     Validation validation;
 
     @Override
-    public void create(Object createItemDto) {
+    public void create(CreateItemDto createItemDto) {
         try {
             validation.validate(createItemDto);
             Item item = new Item();
@@ -68,9 +68,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateById(Long id, Object itemDto) {
+    public void updateById(Long id, CreateItemDto itemDto) {
         Optional<Item> item = itemRepository.findById(id);
         if(item.isPresent()) {
+            validation.validate(itemDto);
             Item data = item.get();
             data.setPrice(itemDto.getPrice());
             data.setName(itemDto.getName());
