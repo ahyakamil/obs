@@ -9,4 +9,8 @@ public class ErrorMessage {
     public static final String INVENTORY_ITEM_ID_MUST_NOT_BE_NULL = "Inventory item id must not be null";
     public static final String INVENTORY_QTY_MUST_GREATER_THAN_ZERO = "Inventory qty must greater than 0";
     public static final String STOCK_CANNOT_BE_NEGATIVE = "Stock cannot be negative";
+    public static final String ORDER_ITEM_ID_MUST_NOT_BE_NULL = "OrderItem item id must not be null";
+    public static final String ORDER_QTY_MUST_NOT_BE_NULL = "OrderItem qty must not be null";
+    public static final String ORDER_QTY_MUST_GREATER_THAN_ZERO = "OrderItem qty must greater than 0";
+    public static final String ORDER_INSUFFICIENT_STOCK = "Insufficient stock";
 }

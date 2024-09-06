@@ -6,6 +6,7 @@ import com.obs.app.obs_api.constant.InternalStatusCode;
 import com.obs.app.obs_api.exception.BadRequestException;
 import com.obs.app.obs_api.exception.ConflictException;
 import com.obs.app.obs_api.exception.NotFoundException;
+import com.obs.app.obs_api.exception.UnprocessableEntityException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,4 +71,13 @@ public class ResponseWrapper<T>{
         responseWrapper.message = e.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseWrapper);
     }
+
+    public ResponseEntity<ResponseWrapper<T>> buildUnprocessableEntity(UnprocessableEntityException e) {
+        ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
+        responseWrapper.status = InternalStatusCode.GENERAL_WARNING;
+        responseWrapper.error = ErrorType.ERROR_UNPROCESSABLE_ENTITY;
+        responseWrapper.message = e.getMessage();
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(responseWrapper);
+    }
+
 }

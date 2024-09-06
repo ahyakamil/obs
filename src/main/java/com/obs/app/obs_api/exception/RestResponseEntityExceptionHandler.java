@@ -30,4 +30,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<ResponseWrapper<Object>> handleBadRequest(BadRequestException e) {
         return new ResponseWrapper<>().buildBadRequestException(e);
     }
+
+    @ExceptionHandler(value = {UnprocessableEntityException.class})
+    protected ResponseEntity<ResponseWrapper<Object>> handleUnprocessableEntity(UnprocessableEntityException e) {
+        return new ResponseWrapper<>().buildUnprocessableEntity(e);
+    }
 }

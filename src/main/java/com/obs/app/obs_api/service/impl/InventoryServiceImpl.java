@@ -106,8 +106,7 @@ public class InventoryServiceImpl implements InventoryService {
             InventoryTypeEnum type = InventoryTypeEnum.fromValue(inventoryDto.getType());
             Inventory data = inventory.get();
 
-            Item item = itemRepository.findByIdForUpdate(data.getId());
-            inventoryRepository.save(data);
+            Item item = itemRepository.findByIdForUpdate(data.getItem().getId());
 
             Integer stock = 0;
             //revert and update stock
@@ -129,6 +128,7 @@ public class InventoryServiceImpl implements InventoryService {
                 //update state
                 data.setQty(inventoryDto.getQty());
                 data.setType(type);
+                inventoryRepository.save(data);
                 itemRepository.updateStockById(item.getId(), stock);
             } else {
                 throw new BadRequestException(ErrorMessage.STOCK_CANNOT_BE_NEGATIVE);

@@ -7,13 +7,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Order {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Long id;
 
     private Integer qty;
-    
+
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)

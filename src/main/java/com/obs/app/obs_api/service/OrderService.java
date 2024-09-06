@@ -1,14 +1,13 @@
 package com.obs.app.obs_api.service;
 
-import com.obs.app.obs_api.dto.CreateItemDto;
-import com.obs.app.obs_api.dto.ItemDto;
+import com.obs.app.obs_api.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
-    void create(CreateItemDto createItemDto);
+    void create(CreateOrderDto createOrderDto);
     void deleteById(Long id);
-    Page<ItemDto> getAll(Pageable pageable);
-    ItemDto getById(Long id);
-    void updateById(Long id, CreateItemDto itemDto);
+    Page<OrderDto> getAll(Pageable pageable);
+    OrderDto getById(Long id);
+    void updateById(Long id, UpdateOrderDto orderDto);
 }
