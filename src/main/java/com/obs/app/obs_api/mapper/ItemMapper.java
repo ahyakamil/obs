@@ -17,10 +17,4 @@ public class ItemMapper {
         dto.setStock(item.getStock());
         return dto;
     }
-
-    public List<ItemDto> toDtoList(List<Item> items) {
-        return items.stream().map(this::toDto)
-                .collect(Collectors.toList());
-
-    }
 }
