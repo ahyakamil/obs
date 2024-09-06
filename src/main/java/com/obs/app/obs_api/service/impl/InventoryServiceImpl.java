@@ -105,9 +105,34 @@ public class InventoryServiceImpl implements InventoryService {
             validation.validate(inventoryDto);
             InventoryTypeEnum type = InventoryTypeEnum.fromValue(inventoryDto.getType());
             Inventory data = inventory.get();
-            data.setQty(inventoryDto.getQty());
-            data.setType(type);
-            createInventoryAndUpdateStock(data);
+
+            Item item = itemRepository.findByIdForUpdate(data.getId());
+            inventoryRepository.save(data);
+
+            Integer stock = 0;
+            //revert and update stock
+            if(InventoryTypeEnum.fromValue(inventoryDto.getType()) == InventoryTypeEnum.TOP_UP) {
+                if(data.getType() == InventoryTypeEnum.TOP_UP) {
+                    stock = (item.getStock() - data.getQty()) + inventoryDto.getQty();
+                } else if(data.getType() == InventoryTypeEnum.WITHDRAWAL) {
+                    stock = (item.getStock() + data.getQty()) + inventoryDto.getQty();
+                }
+            } else if(InventoryTypeEnum.fromValue(inventoryDto.getType()) == InventoryTypeEnum.WITHDRAWAL) {
+                if(data.getType() == InventoryTypeEnum.TOP_UP) {
+                    stock = (item.getStock() - data.getQty()) - inventoryDto.getQty();
+                } else if(data.getType() == InventoryTypeEnum.WITHDRAWAL) {
+                    stock = (item.getStock() + data.getQty()) - inventoryDto.getQty();
+                }
+            }
+
+            if(stock >= 0) {
+                //update state
+                data.setQty(inventoryDto.getQty());
+                data.setType(type);
+                itemRepository.updateStockById(item.getId(), stock);
+            } else {
+                throw new BadRequestException(ErrorMessage.STOCK_CANNOT_BE_NEGATIVE);
+            }
         } else {
             throw new NotFoundException();
         }
