@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 @Getter
 public class ResponseWrapper<T>{
-    int status;
+    int statusCode;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     T data;
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -23,26 +23,26 @@ public class ResponseWrapper<T>{
 
     public ResponseEntity<ResponseWrapper<T>> buildResponseOk(T data) {
        ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-       responseWrapper.status = InternalStatusCode.GENERAL_SUCCESS;
+       responseWrapper.statusCode = InternalStatusCode.GENERAL_SUCCESS;
        responseWrapper.data = data;
        return ResponseEntity.ok(responseWrapper);
     }
 
     public ResponseEntity<ResponseWrapper<T>> buildResponseOk() {
         ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-        responseWrapper.status = InternalStatusCode.GENERAL_SUCCESS;
+        responseWrapper.statusCode = InternalStatusCode.GENERAL_SUCCESS;
         return ResponseEntity.ok(responseWrapper);
     }
 
     public ResponseEntity<ResponseWrapper<T>> buildResponseCreated() {
         ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-        responseWrapper.status = InternalStatusCode.GENERAL_SUCCESS;
+        responseWrapper.statusCode = InternalStatusCode.GENERAL_SUCCESS;
         return ResponseEntity.status(HttpStatus.CREATED).body(responseWrapper);
     }
 
     public ResponseEntity<ResponseWrapper<T>> buildGeneralException(Exception e) {
         ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-        responseWrapper.status = InternalStatusCode.GENERAL_ERROR;
+        responseWrapper.statusCode = InternalStatusCode.GENERAL_ERROR;
         responseWrapper.error = ErrorType.ERROR_GENERAL;
         responseWrapper.message = e.getMessage();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseWrapper);
@@ -50,7 +50,7 @@ public class ResponseWrapper<T>{
 
     public ResponseEntity<ResponseWrapper<T>> buildConflictException(ConflictException e) {
         ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-        responseWrapper.status = InternalStatusCode.GENERAL_WARNING;
+        responseWrapper.statusCode = InternalStatusCode.GENERAL_WARNING;
         responseWrapper.error = ErrorType.ERROR_CONFLICT;
         responseWrapper.message = e.getMessage();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(responseWrapper);
@@ -58,7 +58,7 @@ public class ResponseWrapper<T>{
 
     public ResponseEntity<ResponseWrapper<T>> buildNotFoundException(NotFoundException e) {
         ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-        responseWrapper.status = InternalStatusCode.GENERAL_WARNING;
+        responseWrapper.statusCode = InternalStatusCode.GENERAL_WARNING;
         responseWrapper.error = ErrorType.ERROR_NOT_FOUND;
         responseWrapper.message = e.getMessage();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseWrapper);
@@ -66,7 +66,7 @@ public class ResponseWrapper<T>{
 
     public ResponseEntity<ResponseWrapper<T>> buildBadRequestException(BadRequestException e) {
         ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-        responseWrapper.status = InternalStatusCode.GENERAL_WARNING;
+        responseWrapper.statusCode = InternalStatusCode.GENERAL_WARNING;
         responseWrapper.error = ErrorType.ERROR_BAD_REQUEST;
         responseWrapper.message = e.getMessage();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseWrapper);
@@ -74,7 +74,7 @@ public class ResponseWrapper<T>{
 
     public ResponseEntity<ResponseWrapper<T>> buildUnprocessableEntity(UnprocessableEntityException e) {
         ResponseWrapper<T> responseWrapper = new ResponseWrapper<T>();
-        responseWrapper.status = InternalStatusCode.GENERAL_WARNING;
+        responseWrapper.statusCode = InternalStatusCode.GENERAL_WARNING;
         responseWrapper.error = ErrorType.ERROR_UNPROCESSABLE_ENTITY;
         responseWrapper.message = e.getMessage();
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(responseWrapper);
