@@ -100,4 +100,70 @@ public class ItemTest {
             assertTrue(e.getMessage().contains(ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK));
         }
     }
+
+    @Test
+    public void given_invalid_item_data_name_is_blank_and_price_zero_when_create_then_error() {
+        CreateItemDto createItemDto = new CreateItemDto();
+        createItemDto.setName(null);
+        createItemDto.setPrice(0);
+
+        assertThrows(BadRequestException.class, () -> itemService.create(createItemDto));
+        try {
+            itemService.create(createItemDto);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK));
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_PRICE_MUST_GREATER_THAN_ZERO));
+        }
+
+        createItemDto.setName("");
+        assertThrows(BadRequestException.class, () -> itemService.create(createItemDto));
+        try {
+            itemService.create(createItemDto);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK));
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_PRICE_MUST_GREATER_THAN_ZERO));
+        }
+
+        createItemDto.setName("      ");
+        assertThrows(BadRequestException.class, () -> itemService.create(createItemDto));
+        try {
+            itemService.create(createItemDto);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK));
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_PRICE_MUST_GREATER_THAN_ZERO));
+        }
+    }
+
+    @Test
+    public void given_invalid_item_data_name_is_blank_and_price_is_null_when_create_then_error() {
+        CreateItemDto createItemDto = new CreateItemDto();
+        createItemDto.setName(null);
+        createItemDto.setPrice(null);
+
+        assertThrows(BadRequestException.class, () -> itemService.create(createItemDto));
+        try {
+            itemService.create(createItemDto);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK));
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_PRICE_MUST_NOT_BE_NULL));
+        }
+
+        createItemDto.setName("");
+        assertThrows(BadRequestException.class, () -> itemService.create(createItemDto));
+        try {
+            itemService.create(createItemDto);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK));
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_PRICE_MUST_NOT_BE_NULL));
+        }
+
+        createItemDto.setName("      ");
+        assertThrows(BadRequestException.class, () -> itemService.create(createItemDto));
+        try {
+            itemService.create(createItemDto);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_NAME_MUST_NOT_BE_BLANK));
+            assertTrue(e.getMessage().contains(ErrorMessage.ITEM_PRICE_MUST_NOT_BE_NULL));
+        }
+    }
 }
